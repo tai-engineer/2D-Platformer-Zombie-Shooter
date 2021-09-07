@@ -24,12 +24,18 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
     }
     public void OnCrouch(InputAction.CallbackContext context)
     {
-        crouchEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            crouchEvent.Invoke(); 
+        }
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        jumpEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            jumpEvent.Invoke(); 
+        }
     }
 
     public void OnMovement(InputAction.CallbackContext context)
@@ -39,11 +45,17 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
 
     public void OnShoot(InputAction.CallbackContext context)
     {
-        shootEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            shootEvent.Invoke(); 
+        }
     }
 
     public void OnSprint(InputAction.CallbackContext context)
     {
-        sprintEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed)
+        {
+            sprintEvent.Invoke(); 
+        }
     }
 }
