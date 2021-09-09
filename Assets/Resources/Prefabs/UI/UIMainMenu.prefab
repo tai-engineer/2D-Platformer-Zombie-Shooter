@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1346359777311699107}
   - component: {fileID: 1346359777311699104}
   m_Layer: 5
-  m_Name: Restart
+  m_Name: Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -8356563702747026947, guid: dc3b189fc7ab9c040b93c4a863303a11, type: 3}
+  m_Sprite: {fileID: -2148019435635829444, guid: dc3b189fc7ab9c040b93c4a863303a11, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 1346359777940255707}
   - component: {fileID: 1346359777940255704}
   m_Layer: 5
-  m_Name: UIMenu
+  m_Name: UIMainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
