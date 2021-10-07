@@ -1,13 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 namespace PZS
 {
     public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField] InputReaderSO _input;
+        [SerializeField] PlayerController _playerPhysic;
+        StateMachine _stateMachine;
+        void Awake()
+        {
+            _stateMachine = new StateMachine();
+            var _idleState = new IdleState();
+            var _runState = new MoveState();
+            var _climpState = new ClimpState();
 
+            _stateMachine.SetState(_idleState);
+        }
+
+        void Update()
+        {
+            _stateMachine.Tick();
+        }
         void OnEnable()
         {
             if(_input)
@@ -31,6 +46,9 @@ namespace PZS
                 _input.moveEvent   -= OnMove;
             }
         }
+
+        void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
+        #region Input
         void OnShoot()
         {
             Debug.Log("Shooting");
@@ -51,5 +69,6 @@ namespace PZS
         {
             Debug.Log("moveInput = " + moveInput);
         }
+        #endregion
     }
 }

@@ -26,7 +26,9 @@ namespace PZS
         {
             //To avoid calling this function many times in same state
             if (_currentState == state)
+            {
                 return;
+            }
             _currentState?.OnExit();
             _currentState = state;
             _currentState.OnEnter();
@@ -34,7 +36,7 @@ namespace PZS
 
         public void AddTransition(IState from, IState to, Func<bool> condition)
         {
-            if (_transitions.TryGetValue(_currentState.GetType(), out var transitions) == false)
+            if (_transitions.TryGetValue(from.GetType(), out var transitions) == false)
             {
                 transitions = new List<Transition>();
                 _transitions[from.GetType()] = transitions;
