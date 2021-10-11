@@ -7,7 +7,6 @@ namespace PZS
     public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField] InputReaderSO _input;
-        [SerializeField] PlayerController _playerPhysic;
         StateMachine _stateMachine;
         void Awake()
         {
