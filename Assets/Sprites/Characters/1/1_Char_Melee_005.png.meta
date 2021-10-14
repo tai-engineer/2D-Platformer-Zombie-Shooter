@@ -79,7 +79,11 @@ TextureImporter:
     serializedVersion: 2
     sprites: []
     outline: []
-    physicsShape: []
+    physicsShape:
+    - - {x: -89.5, y: -217.5}
+      - {x: -87.5, y: 185.5}
+      - {x: 124.5, y: 181.5}
+      - {x: 128.5, y: -219.5}
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
