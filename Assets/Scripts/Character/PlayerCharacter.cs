@@ -8,6 +8,8 @@ namespace PZS
     {
         [SerializeField] InputReaderSO _input;
         StateMachine _stateMachine;
+        public Vector3 MoveInput { get; private set; }
+        public bool SprintInput { get; private set; }
         void Awake()
         {
             _stateMachine = new StateMachine();
@@ -60,13 +62,13 @@ namespace PZS
         {
             Debug.Log("Jumping");
         }
-        void OnSprint()
+        void OnSprint(bool sprintInput)
         {
-            Debug.Log("Sprinting");
+            SprintInput = sprintInput;
         }
         void OnMove(Vector2 moveInput)
         {
-            Debug.Log("moveInput = " + moveInput);
+            MoveInput = moveInput;
         }
         #endregion
     }
