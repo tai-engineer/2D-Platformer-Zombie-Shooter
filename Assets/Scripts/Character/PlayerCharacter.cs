@@ -10,6 +10,7 @@ namespace PZS
         StateMachine _stateMachine;
         public Vector3 MoveInput { get; private set; }
         public bool SprintInput { get; private set; }
+        public bool JumpInput { get; private set; }
         void Awake()
         {
             _stateMachine = new StateMachine();
@@ -58,9 +59,9 @@ namespace PZS
         {
             Debug.Log("Crouching");
         }
-        void OnJump()
+        void OnJump(bool jumpInput)
         {
-            Debug.Log("Jumping");
+            JumpInput = jumpInput;
         }
         void OnSprint(bool sprintInput)
         {

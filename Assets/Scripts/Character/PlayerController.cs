@@ -18,10 +18,12 @@ namespace PZS
         [SerializeField, Tooltip("Raycast length starting from edge of box collider")]
         float _verticalCheckDistance;
         [SerializeField] float _maxGroundSpeed;
+        [SerializeField] float _maxJumpSpeed;
         #endregion
         Vector2 _moveVector;
-        static int moveParameter = Animator.StringToHash("IsMoving");
-        static int sprintParameter = Animator.StringToHash("IsSprinting");
+        static int _moveParameter = Animator.StringToHash("IsMoving");
+        static int _sprintParameter = Animator.StringToHash("IsSprinting");
+        static int _jumpParameter = Animator.StringToHash("IsJumping");
         void Awake()
         {
             _boxCollider = GetComponent<BoxCollider2D>();
@@ -33,12 +35,18 @@ namespace PZS
         void FixedUpdate()
         {
             _moveVector = _player.MoveInput * _maxGroundSpeed;
-            _animator.SetBool(moveParameter, _moveVector.x != 0);
-            _animator.SetBool(sprintParameter, false);
+            _animator.SetBool(_moveParameter, _moveVector.x != 0);
+            _animator.SetBool(_sprintParameter, false);
+            _animator.SetBool(_jumpParameter, false);
             if (_player.SprintInput)
             {
                 _moveVector *= 1.5f;
-                _animator.SetBool(sprintParameter, true);
+                _animator.SetBool(_sprintParameter, true);
+            }
+            if(_player.JumpInput)
+            {
+                SetY(_maxJumpSpeed);
+                _animator.SetBool(_jumpParameter, true);
             }
             _rb2D.MovePosition(_rb2D.position + _moveVector * Time.deltaTime);
         }
@@ -63,6 +71,14 @@ namespace PZS
                 Debug.DrawRay(raycast[i], direction * _verticalCheckDistance);
             }
             return false;
+        }
+        public void SetX(float value)
+        {
+            _moveVector.x = value;
+        }
+        public void SetY(float value)
+        {
+            _moveVector.y = value;
         }
     }
 }

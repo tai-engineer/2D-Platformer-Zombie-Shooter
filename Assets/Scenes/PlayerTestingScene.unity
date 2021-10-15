@@ -303,6 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _verticalCheckDistance: 0
   _maxGroundSpeed: 3
+  _maxJumpSpeed: 5
 --- !u!61 &2022322574
 BoxCollider2D:
   m_ObjectHideFlags: 0
