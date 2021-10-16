@@ -12,7 +12,6 @@ namespace PZS
         BoxCollider2D _boxCollider;
         Rigidbody2D _rb2D;
         PlayerCharacter _player;
-        Animator _animator;
         #endregion
         #region Serializable Fields
         [SerializeField, Tooltip("Raycast length starting from edge of box collider")]
@@ -21,34 +20,20 @@ namespace PZS
         [SerializeField] float _maxJumpSpeed;
         #endregion
         Vector2 _moveVector;
-        static int _moveParameter = Animator.StringToHash("IsMoving");
-        static int _sprintParameter = Animator.StringToHash("IsSprinting");
-        static int _jumpParameter = Animator.StringToHash("IsJumping");
+        public Vector2 MoveVector { get { return _moveVector; } }
         void Awake()
         {
             _boxCollider = GetComponent<BoxCollider2D>();
             _rb2D = GetComponent<Rigidbody2D>();
             _player = GetComponent<PlayerCharacter>();
-            _animator = GetComponent<Animator>();
+
         }
 
         void FixedUpdate()
         {
-            _moveVector = _player.MoveInput * _maxGroundSpeed;
-            _animator.SetBool(_moveParameter, _moveVector.x != 0);
-            _animator.SetBool(_sprintParameter, false);
-            _animator.SetBool(_jumpParameter, false);
-            if (_player.SprintInput)
-            {
-                _moveVector *= 1.5f;
-                _animator.SetBool(_sprintParameter, true);
-            }
-            if(_player.JumpInput)
-            {
-                SetY(_maxJumpSpeed);
-                _animator.SetBool(_jumpParameter, true);
-            }
-            _rb2D.MovePosition(_rb2D.position + _moveVector * Time.deltaTime);
+            Vector2 movement = _moveVector * Time.deltaTime;
+            _rb2D.MovePosition(_rb2D.position + movement);
+            _moveVector = Vector2.zero;
         }
         void Update()
         {
@@ -85,6 +70,10 @@ namespace PZS
         public void SetY(float value)
         {
             _moveVector.y = value;
+        }
+        public void MoveHorizontal()
+        {
+            _moveVector = _player.MoveInput * _maxGroundSpeed;
         }
     }
 }

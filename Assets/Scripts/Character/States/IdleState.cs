@@ -6,7 +6,8 @@ namespace PZS
 {
     public class IdleState : IState
     {
-        public IdleState() { }
+        PlayerController _controller;
+        public IdleState(PlayerController controller) => _controller = controller;
         public void OnEnter()
         {
             Debug.Log($"Enter {this.GetType()}");
@@ -20,6 +21,7 @@ namespace PZS
         public void Tick()
         {
             Debug.Log($"Tick {this.GetType()}");
+            _controller.VerticalCollisionCheck(false);
         }
     }
 }
