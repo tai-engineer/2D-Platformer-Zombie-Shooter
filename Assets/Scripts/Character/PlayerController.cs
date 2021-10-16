@@ -60,17 +60,23 @@ namespace PZS
             Vector2 size = _boxCollider.size;
             Vector2 center = _boxCollider.bounds.center;
             Vector2 direction = above ? Vector2.up : Vector2.down;
-            Vector2 middle = center + direction * size.y * 0.5f;
+            float offset = 0.1f;
+            Vector2 middle = center + direction * (size.y * 0.5f + offset);
 
             Vector2[] raycast = new Vector2[3];
             raycast[0] = middle + Vector2.left * size.x * 0.5f;
             raycast[1] = middle;
             raycast[2] = middle + Vector2.right * size.x * 0.5f;
+            RaycastHit2D[] hits = new RaycastHit2D[3];
+            Vector2[] normals = new Vector2[3];
+            Vector2 result = Vector2.zero;
             for(int i = 0; i < raycast.Length; i++)
             {
-                Debug.DrawRay(raycast[i], direction * _verticalCheckDistance);
+                hits[i] = Physics2D.Raycast(raycast[i], direction, _verticalCheckDistance);
+                normals[i] = hits[i].collider ? hits[i].normal : Vector2.zero;
+                result += normals[i];
             }
-            return false;
+            return Mathf.Approximately(result.y, 3f);
         }
         public void SetX(float value)
         {
