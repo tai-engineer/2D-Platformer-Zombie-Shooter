@@ -20,20 +20,22 @@ namespace PZS
         [SerializeField] float _maxJumpSpeed;
         #endregion
         Vector2 _moveVector;
+        public float Gravity { get; private set; }
         public Vector2 MoveVector { get { return _moveVector; } }
+        public float MaxJumpSpeed { get { return _maxJumpSpeed; } }
         void Awake()
         {
             _boxCollider = GetComponent<BoxCollider2D>();
             _rb2D = GetComponent<Rigidbody2D>();
             _player = GetComponent<PlayerCharacter>();
 
+            Gravity = Physics2D.gravity.y;
         }
 
         void FixedUpdate()
         {
             Vector2 movement = _moveVector * Time.deltaTime;
             _rb2D.MovePosition(_rb2D.position + movement);
-            _moveVector = Vector2.zero;
         }
         void Update()
         {
@@ -63,17 +65,37 @@ namespace PZS
             }
             return Mathf.Approximately(result.y, 3f);
         }
-        public void SetX(float value)
+        public void SetHorizontalMovement(float value)
         {
             _moveVector.x = value;
         }
-        public void SetY(float value)
+        public void SetVerticalMovement(float value)
         {
             _moveVector.y = value;
         }
-        public void MoveHorizontal()
+        public void AddVerticalMovement(float value)
         {
-            _moveVector = _player.MoveInput * _maxGroundSpeed;
+            _moveVector.y += value;
+        }
+        public void SetMoveVector(Vector2 value)
+        {
+            _moveVector = value;
+        }
+        public void ResetMoveVector()
+        {
+            SetMoveVector(Vector2.zero);
+        }
+        public void HorizontalMove()
+        {
+            SetHorizontalMovement(_player.MoveInput.x * _maxGroundSpeed);
+        }
+        public void VerticalMove()
+        {
+            AddVerticalMovement(Gravity * Time.deltaTime);
+            if(Mathf.Approximately(_moveVector.y, Gravity))
+            {
+                _moveVector.y = Gravity;
+            }
         }
     }
 }

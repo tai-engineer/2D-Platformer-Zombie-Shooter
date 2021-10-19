@@ -10,18 +10,17 @@ namespace PZS
         public IdleState(PlayerController controller) => _controller = controller;
         public void OnEnter()
         {
-            Debug.Log($"Enter {this.GetType()}");
+            _controller.ResetMoveVector();
         }
 
         public void OnExit()
         {
-            Debug.Log($"Exit {this.GetType()}");
+
         }
 
         public void Tick()
         {
-            Debug.Log($"Tick {this.GetType()}");
-            _controller.VerticalCollisionCheck(false);
+
         }
     }
 }

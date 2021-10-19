@@ -18,21 +18,17 @@ namespace PZS
         }
         public void OnEnter()
         {
-            Debug.Log($"Enter {this.GetType()}");
             _animator.SetBool(_moveParameter, true);
         }
 
         public void OnExit()
         {
-            Debug.Log($"Exit {this.GetType()}");
             _animator.SetBool(_moveParameter, false);
         }
 
         public void Tick()
         {
-            Debug.Log($"Tick {this.GetType()}");
-            _controller.MoveHorizontal();
-            _controller.VerticalCollisionCheck(false);
+            _controller.HorizontalMove();
         }
     }
 }

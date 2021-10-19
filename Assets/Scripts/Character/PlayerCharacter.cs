@@ -7,8 +7,6 @@ namespace PZS
     {
         [SerializeField] InputReaderSO _input;
 
-        static int _jumpParameter = Animator.StringToHash("IsJumping");
-
         public Vector3 MoveInput { get; private set; }
         public bool SprintInput { get; private set; }
         public bool JumpInput { get; private set; }
