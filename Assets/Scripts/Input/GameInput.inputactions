@@ -128,7 +128,7 @@
                     "name": "",
                     "id": "cd2a6d6e-bfca-411a-b4e8-f55f2b13a8a0",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.6)",
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Jump",

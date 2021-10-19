@@ -8,10 +8,10 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
     GameInput _gameInput;
 
     public event UnityAction crouchEvent = delegate { };
-    public event UnityAction jumpEvent = delegate { };
+    public event UnityAction<bool> jumpEvent = delegate { };
     public event UnityAction<Vector2> moveEvent = delegate { };
     public event UnityAction shootEvent = delegate { };
-    public event UnityAction sprintEvent = delegate { };
+    public event UnityAction<bool> sprintEvent = delegate { };
     void OnEnable()
     {
         if(_gameInput == null)
@@ -32,9 +32,17 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed)
+        if (context.phase == InputActionPhase.Started)
         {
-            jumpEvent.Invoke(); 
+            jumpEvent.Invoke(true);
+        }
+        else if (context.phase == InputActionPhase.Performed)
+        {
+            jumpEvent.Invoke(false);
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            jumpEvent.Invoke(false);
         }
     }
 
@@ -55,7 +63,11 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            sprintEvent.Invoke(); 
+            sprintEvent.Invoke(true);
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            sprintEvent.Invoke(false);
         }
     }
 }

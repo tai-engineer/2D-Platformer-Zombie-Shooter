@@ -1,27 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 namespace PZS
 {
     public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField] InputReaderSO _input;
-        StateMachine _stateMachine;
-        void Awake()
-        {
-            _stateMachine = new StateMachine();
-            var _idleState = new IdleState();
-            var _runState = new MoveState();
-            var _climpState = new ClimpState();
 
-            _stateMachine.SetState(_idleState);
-        }
-
-        void Update()
-        {
-            _stateMachine.Tick();
-        }
+        public Vector3 MoveInput { get; private set; }
+        public bool SprintInput { get; private set; }
+        public bool JumpInput { get; private set; }
         void OnEnable()
         {
             if(_input)
@@ -45,8 +33,6 @@ namespace PZS
                 _input.moveEvent   -= OnMove;
             }
         }
-
-        void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
         #region Input
         void OnShoot()
         {
@@ -56,17 +42,17 @@ namespace PZS
         {
             Debug.Log("Crouching");
         }
-        void OnJump()
+        void OnJump(bool jumpInput)
         {
-            Debug.Log("Jumping");
+            JumpInput = jumpInput;
         }
-        void OnSprint()
+        void OnSprint(bool sprintInput)
         {
-            Debug.Log("Sprinting");
+            SprintInput = sprintInput;
         }
         void OnMove(Vector2 moveInput)
         {
-            Debug.Log("moveInput = " + moveInput);
+            MoveInput = moveInput;
         }
         #endregion
     }
