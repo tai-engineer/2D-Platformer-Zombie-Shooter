@@ -23,6 +23,7 @@ namespace PZS
         public float Gravity { get; private set; }
         public Vector2 MoveVector { get { return _moveVector; } }
         public float MaxJumpSpeed { get { return _maxJumpSpeed; } }
+        public bool IsLanded { get; private set; }
         void Awake()
         {
             _boxCollider = GetComponent<BoxCollider2D>();
@@ -92,10 +93,14 @@ namespace PZS
         public void VerticalMove()
         {
             AddVerticalMovement(Gravity * Time.deltaTime);
-            if(Mathf.Approximately(_moveVector.y, Gravity))
-            {
-                _moveVector.y = Gravity;
-            }
+        }
+        public void LandingPrepare()
+        {
+            IsLanded = false;
+        }
+        public void LandingEnd()
+        {
+            IsLanded = true;
         }
     }
 }

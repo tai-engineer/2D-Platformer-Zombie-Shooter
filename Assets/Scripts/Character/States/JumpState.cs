@@ -23,6 +23,7 @@ namespace PZS
             _animator.SetBool(_jumpParameter, true);
             // Initial jump force
             _controller.SetVerticalMovement(_initialJumpForce);
+            _controller.LandingPrepare();
         }
 
         public void OnExit()
