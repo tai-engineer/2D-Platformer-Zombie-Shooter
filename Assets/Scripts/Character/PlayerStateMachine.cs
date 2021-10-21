@@ -25,7 +25,7 @@ namespace PZS
             var _jumpState = new JumpState(_controller, _animator, _controller.MaxJumpSpeed);
             var _fallState = new FallState(_controller, _animator);
             var _landState = new LandState(_animator);
-
+            var _shootState = new ShootState(_controller, _animator);
 
             At(_idleState, _runState, IsMoving);
             At(_idleState, _jumpState, IsJumping);
@@ -33,9 +33,17 @@ namespace PZS
             At(_runState, _idleState, IsStopMoving);
 
             At(_jumpState, _fallState, IsFalling);
+
             At(_fallState, _landState, IsGrounded);
+
             At(_landState, _idleState, IsLanded);
 
+            At(_shootState, _idleState, IsStopMoving);
+            At(_shootState, _runState, IsMoving);
+            At(_shootState, _jumpState, IsJumping);
+            At(_shootState, _fallState, IsFalling);
+
+            AtAny(_shootState, () => _player.ShootInput);
             _stateMachine.SetState(_idleState);
         }
         void Update()
