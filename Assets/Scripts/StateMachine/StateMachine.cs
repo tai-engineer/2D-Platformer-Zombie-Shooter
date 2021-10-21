@@ -14,13 +14,10 @@ namespace PZS
         readonly List<Transition> EmptyTransition = new List<Transition>(0);
         public void Tick()
         {
-            if(_transitions.TryGetValue(_currentState.GetType(), out List<Transition> transitions))
+            var transition = GetTransition();
+            if (transition != null)
             {
-                var transition = GetTransition();
-                if (transition != null)
-                {
-                    SetState(transition.To); 
-                }
+                SetState(transition.To); 
             }
             _currentState.Tick();
         }

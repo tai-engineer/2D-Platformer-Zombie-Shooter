@@ -26,7 +26,6 @@ namespace PZS
             var _fallState = new FallState(_controller, _animator);
             var _landState = new LandState(_animator);
 
-            _stateMachine.SetState(_idleState);
 
             At(_idleState, _runState, IsMoving);
             At(_idleState, _jumpState, IsJumping);
@@ -36,6 +35,8 @@ namespace PZS
             At(_jumpState, _fallState, IsFalling);
             At(_fallState, _landState, IsGrounded);
             At(_landState, _idleState, IsLanded);
+
+            _stateMachine.SetState(_idleState);
         }
         void Update()
         {
