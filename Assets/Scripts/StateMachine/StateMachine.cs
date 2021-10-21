@@ -9,11 +9,14 @@ namespace PZS
         IState _currentState;
 
         Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type, List<Transition>>();
+        List<Transition> _anyTransitions = new List<Transition>();
+        List<Transition> _currentTransitions = new List<Transition>();
+        readonly List<Transition> EmptyTransition = new List<Transition>(0);
         public void Tick()
         {
             if(_transitions.TryGetValue(_currentState.GetType(), out List<Transition> transitions))
             {
-                var transition = GetTransition(transitions);
+                var transition = GetTransition();
                 if (transition != null)
                 {
                     SetState(transition.To); 
@@ -31,6 +34,10 @@ namespace PZS
             }
             _currentState?.OnExit();
             _currentState = state;
+
+            _transitions.TryGetValue(_currentState.GetType(), out _currentTransitions);
+            if (_currentTransitions == null)
+                _currentTransitions = EmptyTransition;
             _currentState.OnEnter();
         }
 
@@ -43,9 +50,19 @@ namespace PZS
             }
             transitions.Add(new Transition(to, condition));
         }
-        Transition GetTransition(List<Transition> transitions)
+
+        public void AddAnyTransition(IState to, Func<bool> condition)
         {
-            foreach(var transition in transitions)
+            _anyTransitions.Add(new Transition(to, condition));
+        }
+        Transition GetTransition()
+        {
+            foreach (var anyTransition in _anyTransitions)
+            {
+                if (anyTransition.Condition())
+                    return anyTransition;
+            }
+            foreach (var transition in _currentTransitions)
             {
                 if (transition.Condition())
                     return transition;

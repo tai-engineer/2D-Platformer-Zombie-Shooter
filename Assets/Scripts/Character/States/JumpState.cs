@@ -6,7 +6,7 @@ namespace PZS
 {
     public class JumpState : IState
     {
-        static int _jumpParameter = Animator.StringToHash("IsJumping");
+        readonly int _jumpParameter = Animator.StringToHash("IsJumping");
 
         PlayerController _controller;
         Animator _animator;

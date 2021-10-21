@@ -6,7 +6,7 @@ namespace PZS
 {
     public class LandState : IState
     {
-        static int _landParameter = Animator.StringToHash("IsLanding");
+        readonly int _landParameter = Animator.StringToHash("IsLanding");
 
         Animator _animator;
         public LandState(Animator animator) => _animator = animator;

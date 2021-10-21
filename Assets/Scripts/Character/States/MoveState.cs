@@ -6,8 +6,8 @@ namespace PZS
 {
     public class MoveState : IState
     {
-        static int _sprintParameter = Animator.StringToHash("IsSprinting");
-        static int _moveParameter = Animator.StringToHash("IsMoving");
+        readonly int _sprintParameter = Animator.StringToHash("IsSprinting");
+        readonly int _moveParameter = Animator.StringToHash("IsMoving");
 
         PlayerController _controller;
         Animator _animator;

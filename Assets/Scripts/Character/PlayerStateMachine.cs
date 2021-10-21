@@ -43,6 +43,7 @@ namespace PZS
         }
 
         void At(IState from, IState to, Func<bool> condition) => _stateMachine.AddTransition(from, to, condition);
+        void AtAny(IState to, Func<bool> condition) => _stateMachine.AddAnyTransition(to, condition);
         bool IsMoving() => !Mathf.Approximately(_player.MoveInput.x, 0f);
         bool IsStopMoving() => Mathf.Approximately(_player.MoveInput.x, 0f);
         bool IsJumping() => _player.JumpInput;
