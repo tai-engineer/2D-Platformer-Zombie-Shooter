@@ -18,6 +18,9 @@ namespace PZS
         float _verticalCheckDistance;
         [SerializeField] float _maxGroundSpeed;
         [SerializeField] float _maxJumpSpeed;
+        [SerializeField] Transform _shootPosition;
+        [SerializeField] ObjectPool _bulletPool;
+
         #endregion
         Vector2 _moveVector;
         public float Gravity { get; private set; }
@@ -101,6 +104,10 @@ namespace PZS
         public void LandingEnd()
         {
             IsLanded = true;
+        }
+        public void Shoot()
+        {
+            _bulletPool.Pop(_shootPosition.position, false);
         }
     }
 }

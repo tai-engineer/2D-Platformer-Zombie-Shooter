@@ -10,6 +10,9 @@ namespace PZS
 
         PlayerController _controller;
         Animator _animator;
+
+        float _coolDown = 0.5f;
+        float _startTime;
         public ShootState(PlayerController controller, Animator animator)
         {
             _controller = controller;
@@ -18,6 +21,7 @@ namespace PZS
         public void OnEnter()
         {
             _animator.SetBool(_shootParameter, true);
+            _startTime = 0f;
         }
 
         public void OnExit()
@@ -27,7 +31,11 @@ namespace PZS
 
         public void Tick()
         {
-            
+            if(Mathf.Approximately(_startTime, 0f) || (Time.time - _startTime) >= _coolDown)
+            {
+                _controller.Shoot();
+                _startTime = Time.time;
+            }
         }
     }
 }
