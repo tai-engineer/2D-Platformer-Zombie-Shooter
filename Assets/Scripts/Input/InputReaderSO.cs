@@ -10,7 +10,7 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
     public event UnityAction crouchEvent = delegate { };
     public event UnityAction<bool> jumpEvent = delegate { };
     public event UnityAction<Vector2> moveEvent = delegate { };
-    public event UnityAction shootEvent = delegate { };
+    public event UnityAction<bool> shootEvent = delegate { };
     public event UnityAction<bool> sprintEvent = delegate { };
     void OnEnable()
     {
@@ -55,7 +55,11 @@ public class InputReaderSO : ScriptableObject, GameInput.IPlayerInputActions
     {
         if (context.phase == InputActionPhase.Performed)
         {
-            shootEvent.Invoke(); 
+            shootEvent.Invoke(true); 
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            shootEvent.Invoke(false);
         }
     }
 

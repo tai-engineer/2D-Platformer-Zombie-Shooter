@@ -10,6 +10,7 @@ namespace PZS
         public Vector3 MoveInput { get; private set; }
         public bool SprintInput { get; private set; }
         public bool JumpInput { get; private set; }
+        public bool ShootInput { get; private set; }
         void OnEnable()
         {
             if(_input)
@@ -34,9 +35,9 @@ namespace PZS
             }
         }
         #region Input
-        void OnShoot()
+        void OnShoot(bool shootInput)
         {
-            Debug.Log("Shooting");
+            ShootInput = shootInput;
         }
         void OnCrouch()
         {
