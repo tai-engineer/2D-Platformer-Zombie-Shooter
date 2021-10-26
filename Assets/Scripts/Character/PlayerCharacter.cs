@@ -6,7 +6,6 @@ namespace PZS
     public class PlayerCharacter : MonoBehaviour
     {
         [SerializeField] InputReaderSO _input;
-
         public Vector3 MoveInput { get; private set; }
         public bool SprintInput { get; private set; }
         public bool JumpInput { get; private set; }
