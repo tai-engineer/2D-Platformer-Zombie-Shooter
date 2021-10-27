@@ -10,6 +10,7 @@ namespace PZS
         public bool SprintInput { get; private set; }
         public bool JumpInput { get; private set; }
         public bool ShootInput { get; private set; }
+        public int Gold { get; set; }
         void OnEnable()
         {
             if(_input)
@@ -32,6 +33,11 @@ namespace PZS
                 _input.sprintEvent -= OnSprint;
                 _input.moveEvent   -= OnMove;
             }
+        }
+
+        public void IncreaseGold(int amount)
+        {
+            Gold += amount;
         }
         #region Input
         void OnShoot(bool shootInput)
