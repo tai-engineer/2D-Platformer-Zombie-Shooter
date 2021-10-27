@@ -28,25 +28,34 @@ namespace PZS
 
         public void Pop(Vector2 position, bool useLocalPosition)
         {
-            for(int i = 0; i < _instances.Count; i++)
+            Pop(position, 1, useLocalPosition);
+        }
+
+        public void Pop(Vector2 position, int amount, bool useLocalPosition)
+        {
+            int counter = 0;
+            for (int i = 0; i < _instances.Count; i++)
             {
-                if(!_instances[i].activeSelf)
-                {
-                    GameObject obj = _instances[i];
-                    if (useLocalPosition)
-                    {
-                        obj.transform.localPosition = position;
-                    }
-                    else
-                    {
-                        obj.transform.position = position;
-                    }
-                    obj.SetActive(true);
+                if (counter == amount)
                     return;
+                if (!_instances[i].activeSelf)
+                {
+                    Pop(_instances[i], position, useLocalPosition);
+                    counter++;
                 }
             }
-
-            //Instantiate();
+        }
+        public void Pop(GameObject obj, Vector2 position, bool useLocalPosition)
+        {
+            if (useLocalPosition)
+            {
+                obj.transform.localPosition = position;
+            }
+            else
+            {
+                obj.transform.position = position;
+            }
+            obj.SetActive(true);
         }
     }
 }
