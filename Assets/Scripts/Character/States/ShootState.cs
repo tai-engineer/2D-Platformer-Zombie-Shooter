@@ -8,12 +8,12 @@ namespace PZS
     {
         readonly int _shootParameter = Animator.StringToHash("IsShooting");
 
-        PlayerController _controller;
+        CharacterController _controller;
         Animator _animator;
 
         float _coolDown = 0.5f;
         float _startTime;
-        public ShootState(PlayerController controller, Animator animator)
+        public ShootState(CharacterController controller, Animator animator)
         {
             _controller = controller;
             _animator = animator;

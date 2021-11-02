@@ -8,12 +8,12 @@ namespace PZS
     public class PlayerStateMachine : MonoBehaviour
     {
         StateMachine _stateMachine;
-        PlayerController _controller;
+        CharacterController _controller;
         Animator _animator;
         PlayerCharacter _player;
         void Awake()
         {
-            _controller = GetComponent<PlayerController>();
+            _controller = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
             _player = GetComponent<PlayerCharacter>();
 

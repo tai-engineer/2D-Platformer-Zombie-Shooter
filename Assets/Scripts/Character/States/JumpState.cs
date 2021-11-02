@@ -8,11 +8,11 @@ namespace PZS
     {
         readonly int _jumpParameter = Animator.StringToHash("IsJumping");
 
-        PlayerController _controller;
+        CharacterController _controller;
         Animator _animator;
 
         float _initialJumpForce;
-        public JumpState(PlayerController controller, Animator animator, float jumpForce)
+        public JumpState(CharacterController controller, Animator animator, float jumpForce)
         {
             _controller = controller;
             _animator = animator;

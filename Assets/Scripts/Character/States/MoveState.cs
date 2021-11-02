@@ -9,10 +9,10 @@ namespace PZS
         readonly int _sprintParameter = Animator.StringToHash("IsSprinting");
         readonly int _moveParameter = Animator.StringToHash("IsMoving");
 
-        PlayerController _controller;
+        CharacterController _controller;
         PlayerCharacter _player;
         Animator _animator;
-        public MoveState(PlayerController controller, PlayerCharacter player, Animator animator)
+        public MoveState(CharacterController controller, PlayerCharacter player, Animator animator)
         {
             _controller = controller;
             _animator = animator;

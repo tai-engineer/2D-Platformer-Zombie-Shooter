@@ -5,14 +5,14 @@ using PZS.BTAI;
 
 namespace PZS
 {
-    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(CharacterController))]
     public class BossBehaviour : MonoBehaviour
     {
-        PlayerController _controller;
+        CharacterController _controller;
         Animator _animator;
         void Awake()
         {
-            _controller = GetComponent<PlayerController>();
+            _controller = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
         }
 
