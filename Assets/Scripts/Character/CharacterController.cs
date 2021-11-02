@@ -6,12 +6,11 @@ namespace PZS
 {
     // Handle player physics
     [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
-    public class PlayerController : MonoBehaviour
+    public class CharacterController : MonoBehaviour
     {
         #region Components
         BoxCollider2D _boxCollider;
         Rigidbody2D _rb2D;
-        PlayerCharacter _player;
         #endregion
         #region Serializable Fields
         [SerializeField, Tooltip("Raycast length starting from edge of box collider")]
@@ -31,7 +30,6 @@ namespace PZS
         {
             _boxCollider = GetComponent<BoxCollider2D>();
             _rb2D = GetComponent<Rigidbody2D>();
-            _player = GetComponent<PlayerCharacter>();
 
             Gravity = Physics2D.gravity.y;
         }
@@ -89,9 +87,9 @@ namespace PZS
         {
             SetMoveVector(Vector2.zero);
         }
-        public void HorizontalMove()
+        public void HorizontalMove(float input)
         {
-            SetHorizontalMovement(_player.MoveInput.x * _maxGroundSpeed);
+            SetHorizontalMovement(input * _maxGroundSpeed);
         }
         public void VerticalMove()
         {

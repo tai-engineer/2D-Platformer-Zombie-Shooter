@@ -10,11 +10,13 @@ namespace PZS
         readonly int _moveParameter = Animator.StringToHash("IsMoving");
 
         PlayerController _controller;
+        PlayerCharacter _player;
         Animator _animator;
-        public MoveState(PlayerController controller, Animator animator)
+        public MoveState(PlayerController controller, PlayerCharacter player, Animator animator)
         {
             _controller = controller;
             _animator = animator;
+            _player = player;
         }
         public void OnEnter()
         {
@@ -28,7 +30,7 @@ namespace PZS
 
         public void Tick()
         {
-            _controller.HorizontalMove();
+            _controller.HorizontalMove(_player.MoveInput.x);
         }
     }
 }
