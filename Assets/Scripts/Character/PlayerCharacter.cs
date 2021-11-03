@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Util.Singleton;
 namespace PZS
 {
-    public class PlayerCharacter : MonoBehaviour
+    public class PlayerCharacter : Singleton<PlayerCharacter>
     {
         [SerializeField] InputReaderSO _input;
         public Vector3 MoveInput { get; private set; }
@@ -11,6 +12,7 @@ namespace PZS
         public bool JumpInput { get; private set; }
         public bool ShootInput { get; private set; }
         public int Gold { get; set; }
+        public int Health { get; set; }
         void OnEnable()
         {
             if(_input)
