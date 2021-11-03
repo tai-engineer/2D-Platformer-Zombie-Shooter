@@ -21,10 +21,11 @@ namespace PZS
         {
             _ai = new Root();
             _ai.OpenBranch(
-                BT.Repeat(3).OpenBranch(
-                    BT.Call(Test1),
-                    BT.Call(Test2),
-                    BT.Call(Test3)
+                BT.Repeat(5).OpenBranch(
+                    BT.Call(Shoot),
+                    BT.SetBool(_animator, "Shoot", true),
+                    BT.Wait(2),
+                    BT.SetBool(_animator, "Shoot", false)
                     ),
                 BT.Terminate()
                 );
@@ -34,22 +35,10 @@ namespace PZS
         {
             _ai.Tick();
         }
-        bool SeekForPlayer()
-        {
-            return false;
-        }
 
-        void Test1()
+        void Shoot()
         {
-            Debug.Log("1");
-        }
-        void Test2()
-        {
-            Debug.Log("2");
-        }
-        void Test3()
-        {
-            Debug.Log("3");
+            _controller.Shoot();
         }
     }
 }
