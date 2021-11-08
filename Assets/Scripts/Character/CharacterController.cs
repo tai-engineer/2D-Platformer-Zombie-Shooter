@@ -21,7 +21,7 @@ namespace PZS
         [SerializeField] ObjectPool _bulletPool;
 
         #endregion
-        Vector2 _moveVector;
+        Vector2 _moveVector = Vector2.zero;
         public float Gravity { get; private set; }
         public Vector2 MoveVector { get { return _moveVector; } }
         public float MaxJumpSpeed { get { return _maxJumpSpeed; } }
@@ -87,9 +87,9 @@ namespace PZS
         {
             SetMoveVector(Vector2.zero);
         }
-        public void HorizontalMove(float input)
+        public void HorizontalMove(float direction)
         {
-            SetHorizontalMovement(input * _maxGroundSpeed);
+            SetHorizontalMovement(direction * _maxGroundSpeed);
         }
         public void VerticalMove()
         {
@@ -106,6 +106,18 @@ namespace PZS
         public void Shoot()
         {
             _bulletPool.Pop(_shootPosition.position, false);
+        }
+        public void MovePosition(float destination)
+        {
+            float distance = destination - _rb2D.position.x;
+            if (Mathf.Approximately(distance, 0f))
+            {
+                ResetMoveVector();
+                return;
+            }
+
+            float direction = distance > 0 ? 1.0f : -1.0f;
+            HorizontalMove(direction);
         }
     }
 }
