@@ -4,58 +4,57 @@ using UnityEngine;
 
 namespace PZS
 {
-    public class ObjectPool : MonoBehaviour
+    public class ObjectPool<T>: MonoBehaviour
+        where T : ObjectPool<T>, new ()
     {
-        List<GameObject> _instances;
+        protected Stack<GameObject> _instances;
         [SerializeField] int _initialPoolSize;
         [SerializeField] GameObject _prefab;
-        void Awake()
+        protected virtual void Awake()
         {
-            _instances = new List<GameObject>();
+            _instances = new Stack<GameObject>();
             for (int i = 0; i < _initialPoolSize; i++)
             {
-                Instantiate();
+                _instances.Push(CreatePoolObject(false));
             }
         }
 
-        void Instantiate()
+        public virtual GameObject Pop(Vector3 position, bool useLocal)
         {
-            GameObject obj = Instantiate(_prefab);
-            obj.transform.SetParent(transform);
-            obj.SetActive(false);
-            _instances.Add(obj);
-        }
-
-        public void Pop(Vector2 position, bool useLocalPosition)
-        {
-            Pop(position, 1, useLocalPosition);
-        }
-
-        public void Pop(Vector2 position, int amount, bool useLocalPosition)
-        {
-            int counter = 0;
-            for (int i = 0; i < _instances.Count; i++)
+            GameObject poolObject;
+            if (_instances.Count > 0)
             {
-                if (counter == amount)
-                    return;
-                if (!_instances[i].activeSelf)
-                {
-                    Pop(_instances[i], position, useLocalPosition);
-                    counter++;
-                }
-            }
-        }
-        public void Pop(GameObject obj, Vector2 position, bool useLocalPosition)
-        {
-            if (useLocalPosition)
-            {
-                obj.transform.localPosition = position;
+                poolObject = _instances.Pop();
+                poolObject.SetActive(true);
             }
             else
             {
-                obj.transform.position = position;
+                poolObject = CreatePoolObject(true);
             }
-            obj.SetActive(true);
+
+            if (useLocal)
+            {
+                poolObject.transform.localPosition = position;
+            }
+            else
+            {
+                poolObject.transform.position = position;
+            }
+
+            return poolObject;
+        }
+        public void Return(GameObject poolObject)
+        {
+            poolObject.gameObject.SetActive(false);
+            _instances.Push(poolObject);
+        }
+        GameObject CreatePoolObject(bool active)
+        {
+            var obj = Instantiate(_prefab);
+            obj.transform.SetParent(transform);
+            obj.SetActive(active);
+
+            return obj;
         }
     }
 }

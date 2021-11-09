@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Util.Singleton;
+using Common.Singleton;
 namespace PZS
 {
     public class SceneController : Singleton<SceneController>
