@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Util.Singleton
+namespace Common.Singleton
 {
     public class Singleton<T> : MonoBehaviour where T : Component
     {
@@ -25,7 +25,7 @@ namespace Util.Singleton
             }
         }
 
-        public virtual void Awake()
+        protected virtual void Awake()
         {
             if (_instance != null)
             {
