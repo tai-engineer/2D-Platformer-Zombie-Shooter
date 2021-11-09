@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 namespace PZS
 {
-    public class BulletPool : ObjectPool<BulletPool>
+    public class BulletPool : ObjectPool
     {
         public override GameObject Pop(Vector3 position, bool useLocal)
         {

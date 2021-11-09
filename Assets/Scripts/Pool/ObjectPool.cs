@@ -4,8 +4,7 @@ using UnityEngine;
 
 namespace PZS
 {
-    public class ObjectPool<T>: MonoBehaviour
-        where T : ObjectPool<T>, new ()
+    public class ObjectPool: MonoBehaviour
     {
         protected Stack<GameObject> _instances;
         [SerializeField] int _initialPoolSize;
@@ -53,7 +52,6 @@ namespace PZS
             var obj = Instantiate(_prefab);
             obj.transform.SetParent(transform);
             obj.SetActive(active);
-
             return obj;
         }
     }
