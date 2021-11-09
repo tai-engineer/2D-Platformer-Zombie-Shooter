@@ -6,7 +6,7 @@ namespace PZS
 {
     // Handle player physics
     [RequireComponent(typeof(BoxCollider2D), typeof(Rigidbody2D))]
-    public class CharacterController : MonoBehaviour
+    public class CharacterPhysic : MonoBehaviour
     {
         #region Components
         BoxCollider2D _boxCollider;
@@ -18,8 +18,6 @@ namespace PZS
         [SerializeField] float _maxGroundSpeed;
         [SerializeField] float _maxJumpSpeed;
         [SerializeField] Transform _shootPosition;
-        [SerializeField] ObjectPool _bulletPool;
-
         #endregion
         Vector2 _moveVector;
         public float Gravity { get; private set; }
@@ -105,7 +103,9 @@ namespace PZS
         }
         public void Shoot()
         {
-            _bulletPool.Pop(_shootPosition.position, false);
+            BulletPool pool = PoolManager.GetPool<BulletPool>();
+
+            pool.Pop(_shootPosition.position, false);
         }
     }
 }

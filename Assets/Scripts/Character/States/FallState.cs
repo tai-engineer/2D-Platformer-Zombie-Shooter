@@ -9,8 +9,8 @@ namespace PZS
         static int _fallParameter = Animator.StringToHash("IsFalling");
 
         Animator _animator;
-        CharacterController _controller;
-        public FallState(CharacterController controller, Animator animator)
+        CharacterPhysic _controller;
+        public FallState(CharacterPhysic controller, Animator animator)
         {
             _controller = controller;
             _animator = animator;

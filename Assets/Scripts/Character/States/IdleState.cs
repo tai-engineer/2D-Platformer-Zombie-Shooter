@@ -6,8 +6,8 @@ namespace PZS
 {
     public class IdleState : IState
     {
-        CharacterController _controller;
-        public IdleState(CharacterController controller) => _controller = controller;
+        CharacterPhysic _controller;
+        public IdleState(CharacterPhysic controller) => _controller = controller;
         public void OnEnter()
         {
             _controller.ResetMoveVector();
