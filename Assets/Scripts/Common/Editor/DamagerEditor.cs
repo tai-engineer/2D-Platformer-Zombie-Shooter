@@ -24,7 +24,7 @@ namespace PZS
             _offsetProp = serializedObject.FindProperty("offset");
             _sizeProp = serializedObject.FindProperty("size");
             _canHitTriggerProp = serializedObject.FindProperty("canHitTrigger");
-            _disableAfterHitProp = serializedObject.FindProperty("disableAfterHit");
+            _disableAfterHitProp = serializedObject.FindProperty("disableDamageAfterHit");
             _hittableLayerProp = serializedObject.FindProperty("hittableLayer");
             _OnDamageableHitProp = serializedObject.FindProperty("onDamageableHit");
         }

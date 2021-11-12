@@ -13,7 +13,7 @@ namespace PZS
         public Vector2 offset;
         public Vector2 size = new Vector2(1f,1f);
         public bool canHitTrigger;
-        public bool disableAfterHit = true;
+        public bool disableDamageAfterHit = true;
         public LayerMask hittableLayer;
         public DamageableEvent onDamageableHit;
 
@@ -27,6 +27,7 @@ namespace PZS
             _contactFilter.useLayerMask = true;
             _contactFilter.useTriggers = canHitTrigger;
         }
+
         void FixedUpdate()
         {
 
@@ -46,7 +47,8 @@ namespace PZS
                 if(_attackOverlapResults[i].TryGetComponent<Damageable>(out Damageable damageable))
                 {
                     damageable.TakeDamage(this);
-                    if (disableAfterHit)
+                    onDamageableHit.Invoke(this, damageable);
+                    if (disableDamageAfterHit)
                         DisableDamage();
                 }
             }
