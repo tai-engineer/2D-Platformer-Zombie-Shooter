@@ -6,31 +6,33 @@ namespace PZS
 {
     public class NormalBullet : MonoBehaviour
     {
+        [SerializeField] GameObject _impactFX;
         [SerializeField] float _speed;
+        [SerializeField] float _explosionDelay = 0.1f;
 
-        Damager _damager;
         BulletPool _bulletPool;
+        ParticleSystemPool _particlePool;
         Vector2 _direction;
         Rigidbody2D _rb2D;
+
         void Awake()
         {
-            _damager = GetComponent<Damager>();
             _rb2D = GetComponent<Rigidbody2D>();
         }
         void Start()
         {
             _bulletPool = PoolManager.GetPool<BulletPool>();
-
-            _damager.onDamageableHit.AddListener(OnDamageableHit);
+            _particlePool = PoolManager.GetPool<ParticleSystemPool>();
         }
         void FixedUpdate()
         {
             _rb2D.MovePosition(_rb2D.position + _direction * _speed * Time.deltaTime);
         }
 
-        void OnDamageableHit(Damager damager, Damageable damageable)
+        public void OnTargetHit()
         {
-            _bulletPool.Return(damager.gameObject);
+            _particlePool.Pop(transform.position, false, _explosionDelay);
+            _bulletPool.Return(gameObject);
         }
 
         public void SetDirection(Vector2 direction)
