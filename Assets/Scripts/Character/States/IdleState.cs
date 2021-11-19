@@ -7,7 +7,14 @@ namespace PZS
     public class IdleState : IState
     {
         CharacterPhysic _controller;
-        public IdleState(CharacterPhysic controller) => _controller = controller;
+        PlayerCharacter _player;
+        Animator _animator;
+        public IdleState(CharacterPhysic controller, PlayerCharacter player, Animator animator)
+        {
+            _controller = controller;
+            _player = player;
+            _animator = animator;
+        }
         public void OnEnter()
         {
             _controller.ResetMoveVector();
@@ -20,7 +27,7 @@ namespace PZS
 
         public void Tick()
         {
-
+            _controller.ThrowGrenade(_player.ThrowInput, _player.ThrowHash, _animator);
         }
     }
 }

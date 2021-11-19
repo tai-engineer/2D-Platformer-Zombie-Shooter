@@ -19,13 +19,13 @@ namespace PZS
 
             _stateMachine = new StateMachine();
             
-            var _idleState = new IdleState(_controller);
+            var _idleState = new IdleState(_controller, _player, _animator);
             var _runState = new MoveState(_controller, _player, _animator);
             var _climpState = new ClimpState();
-            var _jumpState = new JumpState(_controller, _animator, _controller.MaxJumpSpeed);
-            var _fallState = new FallState(_controller, _animator);
-            var _landState = new LandState(_animator);
-            var _shootState = new ShootState(_controller, _animator);
+            var _jumpState = new JumpState(_controller, _player, _animator, _controller.MaxJumpSpeed);
+            var _fallState = new FallState(_controller, _player, _animator);
+            var _landState = new LandState(_player, _animator);
+            var _shootState = new ShootState(_controller, _player, _animator);
 
             At(_idleState, _runState, IsMoving);
             At(_idleState, _jumpState, IsJumping);

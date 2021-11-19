@@ -6,23 +6,23 @@ namespace PZS
 {
     public class FallState : IState
     {
-        static int _fallParameter = Animator.StringToHash("IsFalling");
-
+        PlayerCharacter _player;
         Animator _animator;
         CharacterPhysic _controller;
-        public FallState(CharacterPhysic controller, Animator animator)
+        public FallState(CharacterPhysic controller, PlayerCharacter player, Animator animator)
         {
             _controller = controller;
+            _player = player;
             _animator = animator;
         }
         public void OnEnter()
         {
-            _animator.SetBool(_fallParameter, true);
+            _animator.SetBool(_player.FallHash, true);
         }
 
         public void OnExit()
         {
-            _animator.SetBool(_fallParameter, false);
+            _animator.SetBool(_player.FallHash, false);
         }
 
         public void Tick()

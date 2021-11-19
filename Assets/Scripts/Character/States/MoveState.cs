@@ -6,9 +6,6 @@ namespace PZS
 {
     public class MoveState : IState
     {
-        readonly int _sprintParameter = Animator.StringToHash("IsSprinting");
-        readonly int _moveParameter = Animator.StringToHash("IsMoving");
-
         CharacterPhysic _controller;
         PlayerCharacter _player;
         Animator _animator;
@@ -20,12 +17,12 @@ namespace PZS
         }
         public void OnEnter()
         {
-            _animator.SetBool(_moveParameter, true);
+            _animator.SetBool(_player.MoveHash, true);
         }
 
         public void OnExit()
         {
-            _animator.SetBool(_moveParameter, false);
+            _animator.SetBool(_player.MoveHash, false);
         }
 
         public void Tick()

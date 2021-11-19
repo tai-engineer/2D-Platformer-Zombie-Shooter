@@ -8,41 +8,63 @@ namespace PZS
     public class Grenade : MonoBehaviour
     {
         [SerializeField] GameObject _impactFX;
-        [SerializeField] float _speed;
 
         Rigidbody2D _rb2D;
-        Vector2 _target;
-        float _range = 0f;
+        Vector2 _target = Vector3.zero;
         float _angle = 45f;
+        Vector2 _direction = Vector2.zero;
         float _impactDelay = 1.0f;
         void Awake()
         {
             _rb2D = GetComponent<Rigidbody2D>();
-            _target = new Vector3(_range, transform.position.y);
         }
 
         /// <summary>
         /// V0x = sqrt(G * R * R / 2 * (H - R * tan(alpha)))
         /// V0y = V0x * tan(alpha)
         /// </summary>
+        float _tanAlpha;
+        float _distance;
+
+        // height = _target.y - transform.position.y;
+        float _height = 0f; // Ignore target height
         Vector2 GetProjectileVelocity()
         {
-            float R = Vector2.Distance(transform.position, _target);
-            R = Mathf.Min(R, _range);
-            float G = Physics2D.gravity.y * _rb2D.gravityScale * _speed;
-            float tanAlpha = Mathf.Tan(_angle * Mathf.Deg2Rad);
-            float H = _target.y - transform.position.y;
+            float G = Physics2D.gravity.y * _rb2D.gravityScale;
 
-            float Vx = Mathf.Sqrt(G * R * R / (2f * (H - R * tanAlpha)));
-            float Vy = Vx * tanAlpha;
-            return new Vector2(Vx, Vy);
+            float Vx = Mathf.Sqrt(G * _distance * _distance / (2f * (_height - _distance * _tanAlpha)));
+            float Vy = Vx * _tanAlpha;
+            return new Vector2(Vx * _direction.x, Vy * _direction.y);
         }
-        public void SetRange(float range) => _range = range;
-        public void SetAngle(float angle) => _angle = angle;
-        public void Launch(float range, float angle)
+        public void SetTargetRange(float xRange, float yRange)
         {
-            SetAngle(angle);
-            SetRange(range);
+            _target.y = yRange;
+            _target.x = transform.position.x + xRange;
+            _distance = Vector2.Distance(transform.position, _target);
+        }
+        public void SetAngle(float angle)
+        {
+            _angle = angle;
+            _tanAlpha = Mathf.Tan(_angle * Mathf.Deg2Rad);
+        }
+        public void SetDirection(float xDir, float yDir)
+        {
+            _direction.x = xDir;
+            _direction.y = yDir;
+        }
+        public void Launch(float range, float angle, Vector2 dir)
+        {
+            if (!Mathf.Approximately(_angle, angle))
+            {
+                SetAngle(angle); 
+            }
+
+            if (!Mathf.Approximately(_direction.x, dir.x))
+            {
+                SetDirection(dir.x, 1f); // left or right 
+            }
+
+            SetTargetRange(range, transform.position.y); // Ignore target height
             _rb2D.AddForce(GetProjectileVelocity(), ForceMode2D.Impulse);
         }
         public void OnExplosion()

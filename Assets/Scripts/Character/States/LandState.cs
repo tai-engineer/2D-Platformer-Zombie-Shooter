@@ -6,18 +6,21 @@ namespace PZS
 {
     public class LandState : IState
     {
-        readonly int _landParameter = Animator.StringToHash("IsLanding");
-
+        PlayerCharacter _player;
         Animator _animator;
-        public LandState(Animator animator) => _animator = animator;
+        public LandState(PlayerCharacter player, Animator animator)
+        {
+            _player = player;
+            _animator = animator;
+        }
         public void OnEnter()
         {
-            _animator.SetBool(_landParameter, true);
+            _animator.SetBool(_player.LandHash, true);
         }
 
         public void OnExit()
         {
-            _animator.SetBool(_landParameter, false);
+            _animator.SetBool(_player.LandHash, false);
         }
 
         public void Tick() { }
