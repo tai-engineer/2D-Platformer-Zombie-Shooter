@@ -6,27 +6,27 @@ namespace PZS
 {
     public class ShootState : IState
     {
-        readonly int _shootParameter = Animator.StringToHash("IsShooting");
-
         CharacterPhysic _controller;
+        PlayerCharacter _player;
         Animator _animator;
 
         float _coolDown = 0.5f;
         float _startTime;
-        public ShootState(CharacterPhysic controller, Animator animator)
+        public ShootState(CharacterPhysic controller, PlayerCharacter player, Animator animator)
         {
             _controller = controller;
+            _player = player;
             _animator = animator;
         }
         public void OnEnter()
         {
-            _animator.SetBool(_shootParameter, true);
+            _animator.SetBool(_player.ShootHash, true);
             _startTime = 0f;
         }
 
         public void OnExit()
         {
-            _animator.SetBool(_shootParameter, false);
+            _animator.SetBool(_player.ShootHash, false);
         }
 
         public void Tick()
